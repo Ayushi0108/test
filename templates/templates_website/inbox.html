@@ -1,0 +1,18 @@
+{% extends 'base_dashboard.html' %}
+
+
+{% block content %}
+    INBOX
+    <div class="container">
+        <br><br>
+
+        <script>
+            var p = document.getElementById("nav-inbox");
+            p.classList.add("active")
+
+            var r = document.getElementById("nav-customers");
+            r.classList.remove("active")
+        </script>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base_dashboard.html' %}
+
+
+{% block content %}
+    LOGOUT
+        <script>
+            var p = document.getElementById("nav-logout");
+            p.classList.add("active")
+
+            var r = document.getElementById("nav-customers");
+            r.classList.remove("active")
+        </script>
+    
+
+{% endblock content %}

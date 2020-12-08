@@ -1,0 +1,147 @@
+{% extends 'base_authentication.html' %}
+{% block content %}
+{% load static %}
+
+<head>
+    <link href="{% static 'static_authentication/bootstrap-4.0/css/bootstrap.min.css' %}" rel='stylesheet'>
+    <link href="{% static 'static_authentication/css/payment.css' %} " rel='stylesheet'>
+    <link href="{% static 'static_authentication/fontawesome-free-5.15.1-web/css/all.css' %} " rel='stylesheet'>
+</head>
+
+
+<div oncontextmenu='return false' class='snippet-body'>
+    <div class="container py-5">
+        <!-- For demo purpose -->
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4"></h1>
+            </div>
+        </div> <!-- End -->
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="card ">
+                    <div class="card-header">
+                        <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                            <!-- Credit card form tabs -->
+                            <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                                <li class="nav-item"> <a data-toggle="pill" href="#credit-card"
+                                        class="nav-link active "> <i class="fas fa-credit-card mr-2"></i> Credit
+                                        Card</a>
+                                </li>
+                                <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i
+                                            class="fab fa-paypal mr-2"></i> Paypal </a>
+                                </li>
+
+                            </ul>
+                        </div> <!-- End -->
+
+
+                        <!-- Credit card form content -->
+                        <div class="tab-content">
+                            <!-- credit card info-->
+                            <div id="credit-card" class="tab-pane fade show active pt-3">
+                                <form role="form" action="{% url 'payment' prize=prize %}" method="POST">
+                                    {% csrf_token %}
+
+                                    <div class=" form-group">
+                                        <label for="username">
+                                            <h6>Purchase Prize</h6>
+                                        </label>
+                                        <input type="text" name="username" placeholder="Purchase Prize" required
+                                            class="form-control " value="${{prize}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardNumber">
+                                            <h6>Card number</h6>
+                                        </label>
+                                        <div class="input-group">
+                                            <input type="text" name="cardNumber"
+                                                onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                                minlength="12" maxlength="12" placeholder="Valid card number"
+                                                class="form-control " required>
+                                            <div class="input-group-append"> <span class="input-group-text text-muted">
+                                                    <i class="fab fa-cc-visa mx-1"></i>
+                                                    <i class="fab fa-cc-mastercard mx-1"></i>
+                                                    <i class="fab fa-cc-amex mx-1"></i> </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label><span class="hidden-xs">
+                                                        <h6>Expiration Date</h6>
+                                                    </span>
+                                                </label>
+                                                <div class="input-group">
+                                                    <input type="number" placeholder="MM" name="month"
+                                                        class="form-control" required min=1 max="12">
+                                                    <input type="number" placeholder="YYYY" name="year" max="9999"
+                                                        class="form-control" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group mb-4"> <label data-toggle="tooltip"
+                                                    title="Three digit CV code on the back of your card">
+                                                    <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                                </label> <input type="number" required class="form-control" min="100"
+                                                    max="999">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button class="subscribe btn btn-primary btn-block shadow-sm">Confirm
+                                            Payment</button>
+
+                                </form>
+
+                            </div>
+                            <br>
+                            <center><label style="color: red; font-size: 18px;">{{err_msg}}</label>
+                                <label style="color: green; font-size: 18px;">{{succ_msg}}</label></center>
+                        </div> <!-- End -->
+                        <!-- Paypal info -->
+                        <div id="paypal" class="tab-pane fade pt-3">
+                            <form action="https://www.paypal.com/in/signin" method="get">
+                                <h6 class="pb-2">Select your paypal account type</h6>
+                                <div class="form-group "> <label class="radio-inline"> <input type="radio"
+                                            name="optradio" checked> Domestic
+                                    </label> <label class="radio-inline"> <input type="radio" name="optradio"
+                                            class="ml-5">International
+                                    </label>
+                                </div>
+                                <p> <button class="btn btn-primary "><i class="fab fa-paypal mr-2"></i>
+                                        Log
+                                        into my Paypal</button>
+                                </p>
+                                <p class="text-muted"> Note: After clicking on the button, you will be directed to a
+                                    secure
+                                    gateway for payment. After completing the payment process, you will be redirected
+                                    back
+                                    to the website to view details of your order.
+                                </p>
+
+                            </form>
+
+                        </div> <!-- End -->
+
+                        <!-- End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type='text/javascript' src="{% static 'static_authentication/bootstrap-4.0/js/jquery-3.5.1.min.js' %}">
+        </script>
+        <script type='text/javascript'
+            src="{% static 'static_authentication/bootstrap-4.0/js/popper.min.js' %}"></script>
+        <script type='text/javascript'
+            src="{% static 'static_authentication/bootstrap-4.0/js/bootstrap.min.js' %}"></script>
+        <script type='text/javascript'>$(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
+    </div>
+</div>
+{% endblock content %}
